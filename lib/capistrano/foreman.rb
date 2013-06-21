@@ -15,17 +15,17 @@ Capistrano::Configuration.instance(:must_exist).load do |configuration|
 
     desc "Start the application services"
     task :start, roles: :app do
-      sudo "service #{options[:app]} start"
+      run "#{foreman_sudo} service #{options[:app]} start"
     end
 
     desc "Stop the application services"
     task :stop, roles: :app do
-      sudo "service #{options[:app]} stop"
+      run "#{foreman_sudo} service #{options[:app]} stop"
     end
 
     desc "Restart the application services"
     task :restart, roles: :app do
-      run "sudo service #{options[:app]} start || sudo service #{options[:app]}  restart"
+      run "#{foreman_sudo} service #{options[:app]} start || #{foreman_sudo} service #{options[:app]}  restart"
     end
 
     def options
@@ -40,5 +40,5 @@ Capistrano::Configuration.instance(:must_exist).load do |configuration|
       opts.map { |opt, value| "--#{opt}=#{value}" }.join " "
     end
   end
-  
+
 end
